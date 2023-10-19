@@ -54,6 +54,14 @@ export class Category extends Entity {
         this.description = description
         Category.validate(this);
     }
+
+    update(name: string, description?: string) {
+        if (name)
+            this.name = name
+
+        if (description)
+            this.description = description
+    }
     
     activate() : void {
         this.is_active = true

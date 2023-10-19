@@ -3,7 +3,6 @@ import { Uuid } from "../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../category.entity";
 
 describe("Category Unit Tests", () => {
-
   let validateSpy: any;
   beforeEach(() => {
     validateSpy = jest.spyOn(Category, "validate");
@@ -19,7 +18,7 @@ describe("Category Unit Tests", () => {
       expect(category.description).toBeNull();
       expect(category.is_active).toBeTruthy();
       expect(category.created_at).toBeInstanceOf(Date);
-      expect(validateSpy).toHaveBeenCalledTimes(1);      
+      expect(validateSpy).toHaveBeenCalledTimes(1);
     });
 
     test("should create a category with all values", () => {
@@ -149,7 +148,6 @@ describe("Category Unit Tests", () => {
 describe("Category Validator", () => {
   describe("create command", () => {
     test("should an invalid category with name property", () => {
-
       expect(() => Category.create({ name: null })).containsErrorMessages({
         name: [
           "name should not be empty",
@@ -228,5 +226,38 @@ describe("Category Validator", () => {
         description: ["description must be a string"],
       });
     });
+  });
+
+  describe("first challenge", () => {
+    test("should update a name and description of category", () => {
+      const category = new Category({ name: "Movie" });
+      expect(category.name).toBe("Movie");
+
+      category.update("Movie 2");
+      expect(category.name).toBe("Movie 2");
+
+      expect(category.description).toBeNull();
+
+      category.update("Movie 3", "Description 3");
+      expect(category.name).toBe("Movie 3");
+
+      expect(category.description).toBe("Description 3");
+    });
+
+    test("should update a status of category", () => {
+      const category = new Category({ name: "Movie" });
+      expect(category.activate).toBeTruthy;
+
+      category.deactivate();
+      expect(category.activate).toBeFalsy;
+
+      category.activate();
+      expect(category.activate).toBeTruthy;
+
+      expect(category.name).toBe("Movie");
+      expect(category.description).toBeNull();      
+
+    });
+
   });
 });
