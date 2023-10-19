@@ -72,8 +72,6 @@ export class Category extends Entity {
         else {
             return isValid
         }
-
-        //return validator.validate(entity)
     }
 
     toJSON() {
