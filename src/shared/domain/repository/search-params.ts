@@ -50,7 +50,7 @@ export class SearchParams<Filter = string> extends ValueObject {
     if (
       Number.isNaN(_per_page) ||
       _per_page <= 0 ||
-      parseInt(_per_page as any) != _per_page
+      parseInt(_per_page as any) !== _per_page
     ) {
       _per_page = this._per_page;
     }
@@ -78,7 +78,7 @@ export class SearchParams<Filter = string> extends ValueObject {
     }
 
     const dir = `${value}`.toLowerCase();
-    this.sort_dir = dir !== "asc" && dir !== "desc" ? "asc" : dir;
+    this._sort_dir = dir !== "asc" && dir !== "desc" ? "asc" : dir;
   }
 
   get filter(): Filter | null {

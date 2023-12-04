@@ -108,4 +108,30 @@ describe("SearchParams Unit Tests", () => {
       ).toBe(i.expected);
     });
   });
+
+  test('filter prop', () => {
+    const params = new SearchParams();
+    expect(params.filter).toBeNull();
+
+    //TODO refactor to test.each
+    const arrange = [
+      { filter: null, expected: null },
+      { filter: undefined, expected: null },
+      { filter: '', expected: null },
+
+      { filter: 0, expected: '0' },
+      { filter: -1, expected: '-1' },
+      { filter: 5.5, expected: '5.5' },
+      { filter: true, expected: 'true' },
+      { filter: false, expected: 'false' },
+      { filter: {}, expected: '[object Object]' },
+      { filter: 'field', expected: 'field' },
+    ];
+
+    arrange.forEach((i) => {
+      expect(new SearchParams({ filter: i.filter as any }).filter).toBe(
+        i.expected,
+      );
+    });
+  });
 });
